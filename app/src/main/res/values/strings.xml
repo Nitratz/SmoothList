@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">SmoothList</string>
+    <string name="title">Titre</string>
+    <string name="description">Description</string>
+    <string name="cancel">Annuler</string>
+    <string name="ok">Ok</string>
+    <string name="error_fields">Veuillez remplir les champs ci-dessus</string>
+    <string name="delete_item_question">Voulez vous supprimer cette note ?</string>
+    <string name="delete_item_title">Supprimer une note</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="cancel_delete">Suprression annuler</string>
+    <string name="delete_note">Note supprimée</string>
+
+    <string-array name="level_array">
+        <item>Normal</item>
+        <item>Important</item>
+        <item>Très Important</item>
+    </string-array>
+</resources>
