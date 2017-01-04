@@ -8,9 +8,11 @@ android:
  components:
   - tools
   - platform-tools
-    - build-tools-23.0.2
-    - $ANDROID_TARGET
+    - build-tools-25.0.2
     - sys-img-armeabi-v7a-$ANDROID_TARGET
+    - android-25
+    - extra-google-m2repository
+    - extra-android-m2repository
 
 before_script:
   - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
