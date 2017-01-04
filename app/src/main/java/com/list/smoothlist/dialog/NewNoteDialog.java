@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.list.smoothlist.R;
+import com.list.smoothlist.database.DBManager;
 import com.list.smoothlist.model.ToDo;
 import com.onurciner.toastox.ToastOX;
 
@@ -27,15 +28,11 @@ public class NewNoteDialog extends Dialog implements View.OnClickListener {
     private Button mCancel;
     private Spinner mSpinner;
 
-    public NewNoteDialog(Context context, ArrayList<ToDo> list) {
+    public NewNoteDialog(Context context, ArrayList<ToDo> list, Drawable[] drawables) {
         super(context);
-        mDrawables = new Drawable[3];
+        mDrawables = drawables;
         mContext = context;
         mList = list;
-
-        mDrawables[0] = ContextCompat.getDrawable(mContext, R.drawable.normal);
-        mDrawables[1] = ContextCompat.getDrawable(mContext, R.drawable.important);
-        mDrawables[2] = ContextCompat.getDrawable(mContext, R.drawable.vimportant);
     }
 
     public void start() {
@@ -78,8 +75,10 @@ public class NewNoteDialog extends Dialog implements View.OnClickListener {
         todo = new ToDo();
         todo.setDesc(desc);
         todo.setTitle(title);
+        todo.setLevelNb(mSpinner.getSelectedItemPosition());
         todo.setLevel(mDrawables[mSpinner.getSelectedItemPosition()]);
 
         mList.add(todo);
+        DBManager.getInstance(mContext).insertNote(todo);
     }
 }

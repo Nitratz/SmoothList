@@ -1,5 +1,7 @@
 package com.list.smoothlist;
 
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CoordinatorLayout mCoord;
     private FloatingActionButton mFab;
     private NewNoteDialog mDialog;
+    private Drawable[] mDrawables;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +38,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)
             actionBar.hide();
-        mList = new ArrayList<>();
+        mDrawables = new Drawable[3];
+        setListData();
 
         DBManager.getInstance(this).getWritableDatabase();
         mCoord = (CoordinatorLayout) findViewById(R.id.coord);
@@ -76,9 +80,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void setListData() {
+        mDrawables[0] = ContextCompat.getDrawable(this, R.drawable.normal);
+        mDrawables[1] = ContextCompat.getDrawable(this, R.drawable.important);
+        mDrawables[2] = ContextCompat.getDrawable(this, R.drawable.vimportant);
+        mList = DBManager.getInstance(this).getAllNotes();
+        for (ToDo item : mList) {
+            item.setLevel(mDrawables[item.getLevelNb()]);
+        }
+    }
+
     private void runDialog() {
         if (mDialog == null)
-            mDialog = new NewNoteDialog(this, mList);
+            mDialog = new NewNoteDialog(this, mList, mDrawables);
         mDialog.setOnDismissListener(dialog -> {
             mAdapter.notifyDataSetChanged();
         });

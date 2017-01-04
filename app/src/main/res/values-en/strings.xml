@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmoothList</string>
+    <string name="cancel">Cancel</string>
+    <string name="cancel_delete">Deletion canceled</string>
+    <string name="delete_item_question">Do you want to delete this note ?</string>
+    <string name="delete_item_title">Delete a note</string>
+    <string name="description">Description</string>
+    <string name="delete_note">Note deleted</string>
+    <string name="error_fields">Please, fill the fields above</string>
+    <string name="no">No</string>
+    <string name="ok">OK</string>
+    <string name="title">Title</string>
+    <string name="yes">Yes</string>
+
+    <string-array name="level_array">
+        <item>Normal</item>
+        <item>Important</item>
+        <item>Very Important</item>
+    </string-array>
+</resources>

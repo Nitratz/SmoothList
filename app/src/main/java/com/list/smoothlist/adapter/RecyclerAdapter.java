@@ -47,13 +47,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         ToDo todo = mTodoList.get(position);
+
         holder.mTitle.setText(todo.getTitle());
         holder.mDesc.setText(todo.getDesc());
         holder.mLevel.setBackground(todo.getLevel());
         holder.mCard.setTag(position);
         holder.mCard.setOnLongClickListener(this);
 
-        setAnimation(holder.mCard, position);
+        if (!todo.isFromDB())
+            setAnimation(holder.mCard, position);
     }
 
     private void setAnimation(View viewToAnimate, int position) {

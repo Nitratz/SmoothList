@@ -2,15 +2,15 @@ package com.list.smoothlist.model;
 
 import android.graphics.drawable.Drawable;
 
-/**
- * Created by Backs on 03/01/2017.
- */
-
 public class ToDo {
 
     private Drawable mLevel;
+    private boolean mFromDB;
+    private int mLevelNb;
     private String mDesc;
     private String mTitle;
+
+    public ToDo() { mFromDB = false; }
 
     public Drawable getLevel() {
         return mLevel;
@@ -18,6 +18,14 @@ public class ToDo {
 
     public void setLevel(Drawable mLevel) {
         this.mLevel = mLevel;
+    }
+
+    public int getLevelNb() {
+        return mLevelNb;
+    }
+
+    public void setLevelNb(int mLevelNb) {
+        this.mLevelNb = mLevelNb;
     }
 
     public String getDesc() {
@@ -35,4 +43,14 @@ public class ToDo {
     public void setTitle(String mTitle) {
         this.mTitle = mTitle;
     }
+
+
+    public boolean isFromDB() {
+        return mFromDB;
+    }
+
+    public void setFromDB(boolean mFromDB) {
+        this.mFromDB = mFromDB;
+    }
+
 }
