@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.list.smoothlist.adapter.RecyclerAdapter;
+import com.list.smoothlist.database.DBManager;
 import com.list.smoothlist.dialog.NewNoteDialog;
 import com.list.smoothlist.model.ToDo;
 
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             actionBar.hide();
         mList = new ArrayList<>();
 
+        DBManager.getInstance(this).getWritableDatabase();
         mCoord = (CoordinatorLayout) findViewById(R.id.coord);
         mRecycler = (RecyclerView) findViewById(R.id.recycler);
         mFab = (FloatingActionButton) findViewById(R.id.floating_button);
@@ -63,16 +65,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
-    }
-
-    private void generateData(ArrayList<ToDo> list) {
-        for (int i = 0; i < 100; i++) {
-            ToDo todo = new ToDo();
-            todo.setLevel(ContextCompat.getDrawable(this, R.mipmap.light_bulb));
-            todo.setDesc("Bonjour ca marche correctement du coup j'écris beaucoup lol xD mdrrrr\nBonjour ca marche correctement du coup j'écris beaucoup lol xD mdrrrr\nBonjour ca marche correctement du coup j'écris beaucoup lol xD mdrrrr\nBonjour ca marche correctement du coup j'écris beaucoup lol xD mdrrrr\nBonjour ca marche correctement du coup j'écris beaucoup lol xD mdrrrr\nBonjour ca marche correctement du coup j'écris beaucoup lol xD mdrrrr\n");
-            todo.setTitle("Test de la cardView");
-            list.add(todo);
-        }
     }
 
     @Override

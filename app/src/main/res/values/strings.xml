@@ -9,7 +9,7 @@
     <string name="delete_item_title">Supprimer une note</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
-    <string name="cancel_delete">Suprression annuler</string>
+    <string name="cancel_delete">Suppression annuler</string>
     <string name="delete_note">Note supprimée</string>
 
     <string-array name="level_array">
