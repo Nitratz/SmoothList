@@ -1,14 +1,21 @@
 language: android
 jdk: oraclejdk8
+env:
+ matrix:
+  - ANDROID_TARGET=android-21  ANDROID_ABI=armeabi-v7a
+
 android:
  components:
-  - platform-tools
   - tools
-  - build-tools-25.0.2
-  - android-25
-  - extra-google-google_play_services
-  - extra-google-m2repository
-  - extra-android-m2repository
-  - addon-google_apis-google-19
-  - sys-img-armeabi-v7a-android-25
-  - sys-img-armeabi-v7a-android-21
+  - platform-tools
+    - build-tools-23.0.2
+    - $ANDROID_TARGET
+    - sys-img-armeabi-v7a-$ANDROID_TARGET
+
+before_script:
+  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - adb wait-for-device
+  - adb shell input keyevent 82 &
+
+script: ./gradlew connectedAndroidTest
