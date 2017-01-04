@@ -9,12 +9,17 @@ android:
   - tools
   - platform-tools
   - tools
-  - build-tools-25.0.0
-  
+  - build-tools-25.0.2
+
   - sys-img-armeabi-v7a-$ANDROID_TARGET
   - android-25
   - extra-google-m2repository
   - extra-android-m2repository
+
+  licenses:
+  - android-sdk-preview-license-.+
+  - android-sdk-license-.+
+  - google-gdk-license-.+
 
 before_script:
   - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
