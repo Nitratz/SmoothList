@@ -17,6 +17,7 @@ public class DBManager extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "DBLIST.db";
 
     private static final String TABLE_TODO = "todo";
+    private static final String C_ID = "id_todo";
     private static final String C_TITLE = "title";
     private static final String C_DESC = "desc";
     private static final String C_LEVEL = "level";
@@ -54,6 +55,14 @@ public class DBManager extends SQLiteOpenHelper {
         return db.insert(TABLE_TODO, null, values) != -1;
     }
 
+    public boolean deleteNote(ToDo todo) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        if (todo.getId() != -1)
+            return db.delete(TABLE_TODO, C_ID + " = " + todo.getId(), null) > 0;
+        return db.delete(TABLE_TODO, C_TITLE + " = \"" + todo.getTitle() + "\" AND " + C_DESC  + " = \"" + todo.getDesc() + "\"", null) > 0;
+    }
+
     public ArrayList<ToDo> getAllNotes() {
         ArrayList<ToDo> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
@@ -64,6 +73,7 @@ public class DBManager extends SQLiteOpenHelper {
             do {
                 ToDo todo = new ToDo();
                 todo.setFromDB(true);
+                todo.setId(cursor.getInt(0));
                 todo.setTitle(cursor.getString(1));
                 todo.setDesc(cursor.getString(2));
                 todo.setLevelNb(cursor.getInt(3));

@@ -4,6 +4,8 @@ import android.graphics.drawable.Drawable;
 
 public class ToDo {
 
+    private int mId = -1;
+
     private Drawable mLevel;
     private boolean mFromDB;
     private int mLevelNb;
@@ -51,6 +53,14 @@ public class ToDo {
 
     public void setFromDB(boolean mFromDB) {
         this.mFromDB = mFromDB;
+    }
+
+    public int getId() {
+        return mId;
+    }
+
+    public void setId(int mId) {
+        this.mId = mId;
     }
 
 }

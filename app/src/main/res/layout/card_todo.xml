@@ -5,19 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="5dp"
-    android:layout_marginTop="5dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
+    android:layout_marginTop="5dp"
     android:clickable="true"
     android:elevation="2dp"
     android:foreground="?android:attr/selectableItemBackground"
     card_view:cardCornerRadius="2dp">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center"
+        android:orientation="horizontal"
         android:padding="5dp">
 
         <ImageView
@@ -48,14 +49,14 @@
                 android:id="@+id/desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:padding="1dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
                 android:fontFamily="sans-serif"
+                android:lines="5"
                 android:maxLines="5"
-                android:text="blablablablablablablabalabla"
+                android:padding="1dp"
+                android:text="Text description appear here to describe note\nText description appear here to describe note\nText description appear here to describe note\n"
                 android:textSize="15sp" />
         </LinearLayout>
-
     </LinearLayout>
 </android.support.v7.widget.CardView>
