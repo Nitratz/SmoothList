@@ -13,10 +13,12 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floating_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_margin="26dp"
         android:src="@drawable/add"
+        android:padding="16dp"
+        android:scaleType="fitXY"
         app:rippleColor="@color/colorPrimary"
         app:layout_anchor="@id/recycler"
         app:layout_anchorGravity="bottom|end"
