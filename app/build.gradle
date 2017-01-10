@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.srcclr.gradle'
 
 repositories {
     mavenCentral()
@@ -7,12 +8,16 @@ repositories {
     }
 }
 
+srcclr {
+    apiToken = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzUyNSwiZXhwIjoxNTE1NjEyNTM4LCJhdXRob3JpdGllcyI6IkFHRU5UIiwianRpIjoiMzhjNjY2NGMtMGUwNS00NTFiLWIzMDMtNTliNTE2NmNlZjRhIiwiY2xpZW50X2lkIjoiIiwic2NvcGUiOltdfQ.QmiYlx8l85ns1d8pCq3VVdL9mfKlOxzgQLzh9Ne7yXoZh6M3WAvDVkocrF2IGNYWFqM9LA35cmJrhDd3jZ4tdoKHJaxi3b6uAJeKSkcvuY8cdpjC2wR3GfV3ycYgJbWKtVu5CCykLIFOsme_SS5rUaQLkzpzzlLlpgUAM8N_s70" // required field
+}
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.list.smoothlist"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -29,6 +34,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        applicationVariants.all { variant ->
+            variant.outputs.each { output ->
+                output.outputFile = file("../apk/todolist.apk")
+            }
         }
     }
     lintOptions {

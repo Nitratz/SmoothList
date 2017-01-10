@@ -1,7 +1,6 @@
 package com.list.smoothlist;
 
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -22,6 +21,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ArrayList<ToDo> mList;
+    private ArrayList<ToDo> mFilterList;
 
     private RecyclerView mRecycler;
     private RecyclerView.Adapter mAdapter;
@@ -35,9 +35,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
-            actionBar.hide();
         mDrawables = new Drawable[3];
         setListData();
 
@@ -50,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mLayoutManager = new LinearLayoutManager(this);
         mRecycler.setLayoutManager(mLayoutManager);
 
-        mAdapter = new RecyclerAdapter(this, mList, mCoord);
+        mAdapter = new RecyclerAdapter(this, mFilterList, mCoord);
         mRecycler.setAdapter(mAdapter);
 
         mFab.setOnClickListener(this);
@@ -80,6 +77,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void filterRecyclerView(String filter){
+        filter = filter.toLowerCase();
+        mFilterList.clear();
+        if (filter.length() == 0) {
+            mFilterList.addAll(mList);
+        } else {
+            for (ToDo note : mList) {
+                if (note.getTitle().toLowerCase().contains(filter) ||
+                        note.getDesc().toLowerCase().contains(filter)) {
+                    mFilterList.add(note);
+                }
+            }
+        }
+        mAdapter.notifyDataSetChanged();
+    }
+
     private void setListData() {
         mDrawables[0] = ContextCompat.getDrawable(this, R.drawable.normal);
         mDrawables[1] = ContextCompat.getDrawable(this, R.drawable.important);
@@ -88,11 +101,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for (ToDo item : mList) {
             item.setLevel(mDrawables[item.getLevelNb()]);
         }
+        mFilterList = new ArrayList<>(mList);
     }
 
     private void runDialog() {
         if (mDialog == null)
-            mDialog = new NewNoteDialog(this, mList, mDrawables);
+            mDialog = new NewNoteDialog(this, mFilterList, mDrawables);
         mDialog.setOnDismissListener(dialog -> {
             mAdapter.notifyDataSetChanged();
         });

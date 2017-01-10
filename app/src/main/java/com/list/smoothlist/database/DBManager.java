@@ -20,7 +20,16 @@ public class DBManager extends SQLiteOpenHelper {
     private static final String C_ID = "id_todo";
     private static final String C_TITLE = "title";
     private static final String C_DESC = "desc";
+    private static final String C_DONE = "is_done";
     private static final String C_LEVEL = "level";
+
+    private enum COLUMNS {
+        ID,
+        TITLE,
+        DESC,
+        DONE,
+        LEVEL,
+    }
 
     private static DBManager INSTANCE = null;
 
@@ -36,7 +45,7 @@ public class DBManager extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_TODO + "(id_todo INTEGER PRIMARY KEY," + "title TEXT, desc TEXT, level INTEGER)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_TODO + "(id_todo INTEGER PRIMARY KEY," + "title TEXT, desc TEXT, is_done SHORT, level INTEGER)");
     }
 
     @Override
@@ -50,6 +59,7 @@ public class DBManager extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(C_TITLE, todo.getTitle());
         values.put(C_DESC, todo.getDesc());
+        values.put(C_DONE, todo.isDone());
         values.put(C_LEVEL, todo.getLevelNb());
 
         return db.insert(TABLE_TODO, null, values) != -1;
@@ -69,14 +79,16 @@ public class DBManager extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery("SELECT * FROM "+ TABLE_TODO, null);
 
+        int lol = COLUMNS.ID.ordinal();
         if (cursor.moveToFirst()) {
             do {
                 ToDo todo = new ToDo();
                 todo.setFromDB(true);
-                todo.setId(cursor.getInt(0));
-                todo.setTitle(cursor.getString(1));
-                todo.setDesc(cursor.getString(2));
-                todo.setLevelNb(cursor.getInt(3));
+                todo.setId(cursor.getInt(COLUMNS.ID.ordinal()));
+                todo.setTitle(cursor.getString(COLUMNS.TITLE.ordinal()));
+                todo.setDesc(cursor.getString(COLUMNS.DESC.ordinal()));
+                todo.setDone(cursor.getShort(COLUMNS.DONE.ordinal()));
+                todo.setLevelNb(cursor.getInt(COLUMNS.LEVEL.ordinal()));
                 list.add(todo);
             } while (cursor.moveToNext());
             cursor.close();

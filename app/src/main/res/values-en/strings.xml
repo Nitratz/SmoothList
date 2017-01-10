@@ -18,4 +18,6 @@
         <item>Important</item>
         <item>Very Important</item>
     </string-array>
+    <string name="edit">Edit</string>
+    <string name="done">Done</string>
 </resources>

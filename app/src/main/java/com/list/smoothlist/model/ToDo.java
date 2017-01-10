@@ -7,6 +7,7 @@ public class ToDo {
     private int mId = -1;
 
     private Drawable mLevel;
+    private short isDone = 0;
     private boolean mFromDB;
     private int mLevelNb;
     private String mDesc;
@@ -63,4 +64,11 @@ public class ToDo {
         this.mId = mId;
     }
 
+    public short isDone() {
+        return isDone;
+    }
+
+    public void setDone(short done) {
+        isDone = done;
+    }
 }

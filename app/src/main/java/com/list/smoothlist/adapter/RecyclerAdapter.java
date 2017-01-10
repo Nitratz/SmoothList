@@ -2,10 +2,8 @@ package com.list.smoothlist.adapter;
 
 import android.content.Context;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,18 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.list.smoothlist.R;
 import com.list.smoothlist.database.DBManager;
 import com.list.smoothlist.model.ToDo;
-import com.onurciner.toastox.ToastOX;
-import com.onurciner.toastox.ToastOXDialog;
 
 import java.util.ArrayList;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements View.OnLongClickListener {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements View.OnLongClickListener, View.OnClickListener {
 
     private ArrayList<ToDo> mTodoList;
     private Context mContext;
@@ -55,6 +52,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.mDesc.setText(todo.getDesc());
         holder.mLevel.setBackground(todo.getLevel());
         holder.mCard.setTag(position);
+        holder.mEdit.setTag(position);
+
+        holder.mEdit.setOnClickListener(this);
         holder.mCard.setOnLongClickListener(this);
 
         if (!todo.isFromDB())
@@ -79,6 +79,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         private CardView mCard;
         private TextView mTitle;
         private TextView mDesc;
+        private Button mEdit;
         private ImageView mLevel;
 
         public ViewHolder(View v) {
@@ -86,6 +87,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             mTitle = (TextView) v.findViewById(R.id.title);
             mLevel = (ImageView) v.findViewById(R.id.level);
             mDesc = (TextView) v.findViewById(R.id.desc);
+            mEdit = (Button) v.findViewById(R.id.edit);
             mCard = (CardView) v.findViewById(R.id.card);
         }
     }
@@ -100,7 +102,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             Log.d("RecyclerDeleteNote", "IsItemDeleted ? " + ret);
         };
 
-        handler.postDelayed(run, 3800);
+        handler.postDelayed(run, 3600);
         mTodoList.remove(pos);
         notifyItemRemoved(pos);
         notifyItemRangeChanged(pos, getItemCount());
@@ -116,5 +118,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 });
         snackbar.show();
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        int pos = (Integer) v.getTag();
+        ToDo todo = mTodoList.get(pos);
+
     }
 }
