@@ -58,17 +58,17 @@ public class ToDo {
 
     public int getId() {
         return mId;
-    }
 
-    public void setId(int mId) {
-        this.mId = mId;
     }
-
-    public short isDone() {
         return isDone;
-    }
+    public short isDone() {
 
-    public void setDone(short done) {
+    }
+        this.mId = mId;
+    public void setId(int mId) {
+
+    }
         isDone = done;
+    public void setDone(short done) {
     }
 }
