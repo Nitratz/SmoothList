@@ -60,15 +60,16 @@ public class ToDo {
         return mId;
 
     }
-        return isDone;
+
     public short isDone() {
-
+        return isDone;
     }
-        this.mId = mId;
+
     public void setId(int mId) {
-
+        this.mId = mId;
     }
-        isDone = done;
+
     public void setDone(short done) {
+        isDone = done;
     }
 }
