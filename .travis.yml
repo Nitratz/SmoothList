@@ -2,11 +2,9 @@ addons:
   srcclr: true
 android:
   components:
-    - tools
-    - platform-tools
-    - tools
     - build-tools-25.0.2
     - sys-img-armeabi-v7a-$ANDROID_TARGET
+    - sys-img-armeabi-v7a-$ANDROID_OLD_TARGET
     - android-25
     - extra-google-m2repository
     - extra-android-m2repository
@@ -21,7 +19,7 @@ before_script:
   - "adb shell input keyevent 82 &"
 env:
   matrix:
-    - "ANDROID_TARGET=android-21  ANDROID_ABI=armeabi-v7a  SRCCLR_API_TOKEN="
+    - "ANDROID_TARGET=android-21  ANDROID_OLD_TARGET=android-19  ANDROID_ABI=armeabi-v7a  SRCCLR_API_TOKEN=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzU4OSwiZXhwIjoxNTE1ODU0MTYyLCJhdXRob3JpdGllcyI6IkFHRU5UIiwianRpIjoiMWVmZTJhMWUtZWExYS00NDRkLTkyYmEtYjdjMmZkNzA1YzZlIiwiY2xpZW50X2lkIjoiIiwic2NvcGUiOltdfQ.Kf8IvSrczULXi7LzmRdsndANW-e38Ebq5R1RiuOytGahCJfsVwe1XVvtbeaDWbE7w7XRjbL6Kx81bBnZc6bZ63rR2Ioe8A_gEC6rBtm7DOKDq9baMHeqnTeqhypG3V1VkIzMlrFkOEamfK0y19yesHUaH4jlaSrzrYQDqeBEbAY"
 jdk: oraclejdk8
 language: android
 script: "./gradlew connectedAndroidTest"
