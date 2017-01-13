@@ -23,4 +23,4 @@ env:
     - "ANDROID_TARGET=android-21  ANDROID_OLD_TARGET=android-19  ANDROID_ABI=armeabi-v7a"
 jdk: oraclejdk8
 language: android
-script: "./gradlew clean build connectedAndroidTest"
+script: "./gradlew connectedAndroidTest"
