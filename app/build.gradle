@@ -17,7 +17,7 @@ android {
         config {
             keyAlias 'SmoothListKey'
             keyPassword 'zsrfyhikpm34'
-            storeFile file('C:/Users/Backs/workspace/SmoothList/keystore.jks')
+            storeFile file('../keystore.jks')
             storePassword 'zsrfyhikpm34'
         }
     }
