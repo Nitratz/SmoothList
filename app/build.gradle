@@ -13,6 +13,14 @@ srcclr {
 }
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'SmoothListKey'
+            keyPassword 'zsrfyhikpm34'
+            storeFile file('C:/Users/Backs/workspace/SmoothList/keystore.jks')
+            storePassword 'zsrfyhikpm34'
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
@@ -32,19 +40,14 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+            signingConfig signingConfigs.config
         }
         applicationVariants.all { variant ->
             variant.outputs.each { output ->
-
-                /*def apk = output.outputFile
-                def newName = variant.baseName.replace("app", "todolist") + ".apk";
-                output.outputFile = new File(apk.parentFile, newName)
-                copy {
-                    from output.outputFile
-                    into "../apk/"
-                }*/
+                renameAPK(variant, variant.name)
             }
         }
     }
@@ -53,8 +56,25 @@ android {
     }
 }
 
+def renameAPK(variant, buildType) {
+    variant.outputs.each { output ->
+        def file = output.packageApplication.outputFile
+        def fileName = ""
+        if (buildType == "debug") {
+            fileName = "todolist.apk"
+        } else if (variant.name == "release") {
+            fileName = "todolist-signed.apk"
+        }
+        output.packageApplication.outputFile = new File(file.parent, fileName)
+        copy {
+            from output.packageApplication.outputFile
+            into "../apk/"
+        }
+    }
+}
+
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     // Test compile
     androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.2'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
