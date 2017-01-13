@@ -1,3 +1,5 @@
+addons:
+  srcclr: true
 android:
   components:
     - tools
@@ -19,7 +21,7 @@ before_script:
   - "adb shell input keyevent 82 &"
 env:
   matrix:
-    - "ANDROID_TARGET=android-21  ANDROID_ABI=armeabi-v7a"
+    - "ANDROID_TARGET=android-21  ANDROID_ABI=armeabi-v7a  SRCCLR_API_TOKEN="
 jdk: oraclejdk8
 language: android
 script: "./gradlew connectedAndroidTest"
