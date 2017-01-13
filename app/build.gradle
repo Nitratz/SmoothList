@@ -37,7 +37,14 @@ android {
         }
         applicationVariants.all { variant ->
             variant.outputs.each { output ->
-                output.outputFile = file("../apk/todolist.apk")
+
+                /*def apk = output.outputFile
+                def newName = variant.baseName.replace("app", "todolist") + ".apk";
+                output.outputFile = new File(apk.parentFile, newName)
+                copy {
+                    from output.outputFile
+                    into "../apk/"
+                }*/
             }
         }
     }
