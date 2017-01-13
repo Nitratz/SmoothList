@@ -1,3 +1,5 @@
+addons:
+  srcclr: true
 android:
   components:
     - tools
