@@ -19,6 +19,7 @@ public class DBManager extends SQLiteOpenHelper {
     private static final String TABLE_TODO = "todo";
     private static final String C_ID = "id_todo";
     private static final String C_TITLE = "title";
+    private static final String C_DATE = "date";
     private static final String C_DESC = "desc";
     private static final String C_DONE = "is_done";
     private static final String C_LEVEL = "level";
@@ -27,6 +28,7 @@ public class DBManager extends SQLiteOpenHelper {
         ID,
         TITLE,
         DESC,
+        DATE,
         DONE,
         LEVEL,
     }
@@ -45,7 +47,7 @@ public class DBManager extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_TODO + "(id_todo INTEGER PRIMARY KEY," + "title TEXT, desc TEXT, is_done SHORT, level INTEGER)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_TODO + "(id_todo INTEGER PRIMARY KEY," + "title TEXT, desc TEXT, date TEXT, is_done SHORT, level INTEGER)");
     }
 
     @Override
@@ -60,9 +62,12 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(C_TITLE, todo.getTitle());
         values.put(C_DESC, todo.getDesc());
         values.put(C_DONE, todo.isDone());
+        values.put(C_DATE, todo.getDate());
         values.put(C_LEVEL, todo.getLevelNb());
 
-        return db.insert(TABLE_TODO, null, values) != -1;
+        long id = db.insert(TABLE_TODO, null, values);
+        todo.setId((int) id);
+        return id != -1;
     }
 
     public boolean deleteNote(ToDo todo) {
@@ -79,16 +84,16 @@ public class DBManager extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery("SELECT * FROM "+ TABLE_TODO, null);
 
-        int lol = COLUMNS.ID.ordinal();
         if (cursor.moveToFirst()) {
             do {
                 ToDo todo = new ToDo();
                 todo.setFromDB(true);
-                todo.setId(cursor.getInt(COLUMNS.ID.ordinal()));
-                todo.setTitle(cursor.getString(COLUMNS.TITLE.ordinal()));
-                todo.setDesc(cursor.getString(COLUMNS.DESC.ordinal()));
-                todo.setDone(cursor.getShort(COLUMNS.DONE.ordinal()));
-                todo.setLevelNb(cursor.getInt(COLUMNS.LEVEL.ordinal()));
+                todo.setId(cursor.getInt(COLUMNS.ID.ordinal()))
+                        .setTitle(cursor.getString(COLUMNS.TITLE.ordinal()))
+                        .setDesc(cursor.getString(COLUMNS.DESC.ordinal()))
+                        .setDate(cursor.getString(COLUMNS.DATE.ordinal()))
+                        .setDone(cursor.getShort(COLUMNS.DONE.ordinal()))
+                        .setLevelNb(cursor.getInt(COLUMNS.LEVEL.ordinal()));
                 list.add(todo);
             } while (cursor.moveToNext());
             cursor.close();

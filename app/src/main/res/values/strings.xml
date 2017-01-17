@@ -6,11 +6,15 @@
     <string name="ok">OK</string>
     <string name="edit">Modifier</string>
     <string name="error_fields">Veuillez remplir les champs ci-dessus</string>
+    <string name="error_date">Impossible d\'entrez une date inférieur à aujourd\'hui</string>
     <string name="delete_item_question">Voulez vous supprimer cette note ?</string>
     <string name="delete_item_title">Supprimer une note</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
     <string name="done">Fait</string>
+    <string name="date">Date</string>
+    <string name="time">Heure</string>
+    <string name="search">Rechercher</string>
     <string name="cancel_delete">Suppression annulé</string>
     <string name="delete_note">Note supprimée</string>
 

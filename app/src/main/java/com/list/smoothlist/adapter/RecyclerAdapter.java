@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,19 +20,23 @@ import android.widget.TextView;
 import com.list.smoothlist.R;
 import com.list.smoothlist.database.DBManager;
 import com.list.smoothlist.model.ToDo;
+import com.onurciner.toastox.ToastOX;
 
 import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements View.OnLongClickListener, View.OnClickListener {
 
-    private ArrayList<ToDo> mTodoList;
+    private ArrayList<ToDo> mFilterList;
+    private ArrayList<ToDo> mFullList;
+
     private Context mContext;
     private CoordinatorLayout mCoord;
 
     private int lastPosition;
 
-    public RecyclerAdapter(Context context, ArrayList<ToDo> list, CoordinatorLayout coord) {
-        mTodoList = list;
+    public RecyclerAdapter(Context context, ArrayList<ToDo> list, ArrayList<ToDo> fullList, CoordinatorLayout coord) {
+        mFilterList = list;
+        mFullList = fullList;
         mCoord = coord;
         mContext = context;
     }
@@ -46,7 +51,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ToDo todo = mTodoList.get(position);
+        ToDo todo = mFilterList.get(position);
 
         holder.mTitle.setText(todo.getTitle());
         holder.mDesc.setText(todo.getDesc());
@@ -56,6 +61,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         holder.mEdit.setOnClickListener(this);
         holder.mCard.setOnLongClickListener(this);
+        holder.mCard.setOnClickListener(this);
 
         if (!todo.isFromDB())
             setAnimation(holder.mCard, position);
@@ -72,7 +78,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return mTodoList.size();
+        return mFilterList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -95,7 +101,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public boolean onLongClick(View v) {
         int pos = (Integer) v.getTag();
-        ToDo todo = mTodoList.get(pos);
+        ToDo todo = mFilterList.get(pos);
         Handler handler = new Handler();
         Runnable run = () -> {
             boolean ret = DBManager.getInstance(mContext).deleteNote(todo);
@@ -103,14 +109,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         };
 
         handler.postDelayed(run, 3600);
-        mTodoList.remove(pos);
+        mFilterList.remove(pos);
+        removeInFullList(todo);
         notifyItemRemoved(pos);
         notifyItemRangeChanged(pos, getItemCount());
 
         Snackbar snackbar = Snackbar
                 .make(mCoord, mContext.getString(R.string.delete_note), 3500)
+                .setAction("Test", view -> {
+
+                })
                 .setAction(mContext.getString(R.string.cancel), view -> {
-                    mTodoList.add(pos, todo);
+                    mFilterList.add(pos, todo);
                     handler.removeCallbacks(run);
                     notifyDataSetChanged();
                     Snackbar snackbar1 = Snackbar.make(mCoord, mContext.getString(R.string.cancel_delete), 1000);
@@ -120,10 +130,19 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return true;
     }
 
+    private void removeInFullList(ToDo _todo) {
+        for (ToDo todo : mFullList) {
+            if (todo.equals(_todo)) {
+                int pos = mFullList.indexOf(todo);
+                mFullList.remove(pos);
+                break;
+            }
+        }
+    }
+
     @Override
     public void onClick(View v) {
         int pos = (Integer) v.getTag();
-        ToDo todo = mTodoList.get(pos);
-
+        ToDo todo = mFilterList.get(pos);
     }
 }
