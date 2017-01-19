@@ -73,9 +73,7 @@ public class DBManager extends SQLiteOpenHelper {
     public boolean deleteNote(ToDo todo) {
         SQLiteDatabase db = getWritableDatabase();
 
-        if (todo.getId() != -1)
-            return db.delete(TABLE_TODO, C_ID + " = " + todo.getId(), null) > 0;
-        return db.delete(TABLE_TODO, C_TITLE + " = \"" + todo.getTitle() + "\" AND " + C_DESC  + " = \"" + todo.getDesc() + "\"", null) > 0;
+        return db.delete(TABLE_TODO, C_ID + " = " + todo.getId(), null) > 0;
     }
 
     public ArrayList<ToDo> getAllNotes() {

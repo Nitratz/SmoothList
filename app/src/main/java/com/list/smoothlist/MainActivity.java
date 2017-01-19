@@ -145,12 +145,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     searchView.setIconified(true);
                 }
                 myActionMenuItem.collapseActionView();
-                menu.findItem(R.id.action_clear).setVisible(true);
                 return false;
             }
             @Override
             public boolean onQueryTextChange(String s) {
-                menu.findItem(R.id.action_clear).setVisible(false);
                 return false;
             }
         });

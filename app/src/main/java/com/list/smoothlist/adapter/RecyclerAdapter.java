@@ -22,6 +22,8 @@ import com.list.smoothlist.database.DBManager;
 import com.list.smoothlist.model.ToDo;
 import com.onurciner.toastox.ToastOX;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements View.OnLongClickListener, View.OnClickListener {
@@ -56,6 +58,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.mTitle.setText(todo.getTitle());
         holder.mDesc.setText(todo.getDesc());
         holder.mLevel.setBackground(todo.getLevel());
+        holder.mDate.setText(todo.getDate());
+
         holder.mCard.setTag(position);
         holder.mEdit.setTag(position);
 
@@ -68,8 +72,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     private void setAnimation(View viewToAnimate, int position) {
-        if (position > lastPosition)
-        {
+        if (position > lastPosition) {
             Animation animation = AnimationUtils.loadAnimation(mContext, android.R.anim.slide_in_left);
             viewToAnimate.startAnimation(animation);
             lastPosition = position;
@@ -85,14 +88,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         private CardView mCard;
         private TextView mTitle;
         private TextView mDesc;
+        private TextView mDate;
         private Button mEdit;
         private ImageView mLevel;
 
-        public ViewHolder(View v) {
+        ViewHolder(View v) {
             super(v);
             mTitle = (TextView) v.findViewById(R.id.title);
             mLevel = (ImageView) v.findViewById(R.id.level);
             mDesc = (TextView) v.findViewById(R.id.desc);
+            mDate = (TextView) v.findViewById(R.id.date_field);
             mEdit = (Button) v.findViewById(R.id.edit);
             mCard = (CardView) v.findViewById(R.id.card);
         }

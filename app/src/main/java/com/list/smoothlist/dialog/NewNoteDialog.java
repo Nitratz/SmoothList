@@ -55,7 +55,7 @@ public class NewNoteDialog extends Dialog implements View.OnClickListener {
         setCancelable(false);
         mCalendar = Calendar.getInstance();
         mSelectedCal = Calendar.getInstance();
-        mFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+        mFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
         mHeader = (ImageView) findViewById(R.id.header);
         mOk = (Button) findViewById(R.id.ok);
