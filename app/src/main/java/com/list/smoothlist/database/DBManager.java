@@ -52,7 +52,8 @@ public class DBManager extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TODO);
+        onCreate(db);
     }
 
     public boolean insertNote(ToDo todo) {
@@ -74,6 +75,19 @@ public class DBManager extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
 
         return db.delete(TABLE_TODO, C_ID + " = " + todo.getId(), null) > 0;
+    }
+
+    public boolean updateNote(ToDo todo) {
+        ContentValues args = new ContentValues();
+        SQLiteDatabase db = getReadableDatabase();
+
+        args.put(C_TITLE, todo.getTitle());
+        args.put(C_DESC, todo.getDesc());
+        args.put(C_DONE, todo.isDone());
+        args.put(C_DATE, todo.getDate());
+        args.put(C_LEVEL, todo.getLevelNb());
+
+        return db.update(TABLE_TODO, args, C_ID + " = " + todo.getId(), null) > 0;
     }
 
     public ArrayList<ToDo> getAllNotes() {

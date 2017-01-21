@@ -1,6 +1,8 @@
 package com.list.smoothlist;
 
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -16,11 +18,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.list.smoothlist.adapter.RecyclerAdapter;
 import com.list.smoothlist.database.DBManager;
 import com.list.smoothlist.dialog.NewNoteDialog;
 import com.list.smoothlist.model.ToDo;
+import com.onurciner.toastox.ToastOX;
 
 import java.util.ArrayList;
 
@@ -36,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CoordinatorLayout mCoord;
     private FloatingActionButton mFab;
     private NewNoteDialog mDialog;
-    private Drawable[] mDrawables;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         mToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(mToolbar);
-        mDrawables = new Drawable[3];
         setListData();
 
         DBManager.getInstance(this).getWritableDatabase();
@@ -103,19 +105,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setListData() {
-        mDrawables[0] = ContextCompat.getDrawable(this, R.drawable.normal);
-        mDrawables[1] = ContextCompat.getDrawable(this, R.drawable.important);
-        mDrawables[2] = ContextCompat.getDrawable(this, R.drawable.vimportant);
         mList = DBManager.getInstance(this).getAllNotes();
-        for (ToDo item : mList) {
-            item.setLevel(mDrawables[item.getLevelNb()]);
-        }
         mFilterList = new ArrayList<>(mList);
     }
 
     private void runDialog() {
         if (mDialog == null)
-            mDialog = new NewNoteDialog(this, mFilterList, mList, mDrawables);
+            mDialog = new NewNoteDialog(this, mFilterList, mList);
         mDialog.setOnDismissListener(dialog -> {
             /*new AlertDialog.Builder(this).setTitle("Question")
                     .setMessage("Do you want to create another task?")
@@ -140,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                filterRecyclerView(query);
+                //filterRecyclerView(query);
                 if(!searchView.isIconified()) {
                     searchView.setIconified(true);
                 }
@@ -149,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             @Override
             public boolean onQueryTextChange(String s) {
+                filterRecyclerView(s);
                 return false;
             }
         });
@@ -163,5 +160,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 42) {
+            if (resultCode == Activity.RESULT_OK) {
+                ToastOX.ok(this, "Swaaaaaaaaaag");
+            }
+        }
     }
 }

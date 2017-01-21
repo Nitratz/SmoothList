@@ -1,11 +1,15 @@
 package com.list.smoothlist.dialog;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,7 +30,6 @@ public class NewNoteDialog extends Dialog implements View.OnClickListener {
     private Context mContext;
     private ArrayList<ToDo> mList;
     private ArrayList<ToDo> mFullList;
-    private Drawable[] mDrawables;
     private DatePickerDialog mDateDialog;
     private TimePickerDialog mTimeDialog;
     private Calendar mCalendar;
@@ -42,9 +45,8 @@ public class NewNoteDialog extends Dialog implements View.OnClickListener {
     private EditText mDatePicker;
     private EditText mTimePicker;
 
-    public NewNoteDialog(Context context, ArrayList<ToDo> list, ArrayList<ToDo> fullList, Drawable[] drawables) {
+    public NewNoteDialog(Context context, ArrayList<ToDo> list, ArrayList<ToDo> fullList) {
         super(context);
-        mDrawables = drawables;
         mContext = context;
         mList = list;
         mFullList = fullList;
@@ -55,7 +57,7 @@ public class NewNoteDialog extends Dialog implements View.OnClickListener {
         setCancelable(false);
         mCalendar = Calendar.getInstance();
         mSelectedCal = Calendar.getInstance();
-        mFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        mFormat = new SimpleDateFormat(mContext.getString(R.string.format_date));
 
         mHeader = (ImageView) findViewById(R.id.header);
         mOk = (Button) findViewById(R.id.ok);
@@ -104,8 +106,7 @@ public class NewNoteDialog extends Dialog implements View.OnClickListener {
         todo = new ToDo();
         todo.setDesc(desc)
                 .setTitle(title)
-                .setLevelNb(mSpinner.getSelectedItemPosition())
-                .setLevel(mDrawables[mSpinner.getSelectedItemPosition()]);
+                .setLevelNb(mSpinner.getSelectedItemPosition());
         if (!mDatePicker.getText().toString().equals(""))
             todo.setDate(mFormat.format(mSelectedCal.getTime()));
         mList.add(todo);

@@ -51,6 +51,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.3"
+                    android:clickable="true"
+                    android:focusableInTouchMode="true"
                     android:entries="@array/level_array" />
             </LinearLayout>
 

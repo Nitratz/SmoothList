@@ -24,4 +24,7 @@
     <string name="date">Date</string>
     <string name="error_date">Impossible to select a date lower than today</string>
     <string name="search">Search</string>
+    <string name="no_date">No due date</string>
+    <string name="format_date">dd/MM/yyyy HH:mm</string>
+    <string name="view">View</string>
 </resources>

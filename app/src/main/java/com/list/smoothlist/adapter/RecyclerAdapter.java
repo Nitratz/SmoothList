@@ -1,6 +1,8 @@
 package com.list.smoothlist.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -17,7 +19,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.list.smoothlist.MainActivity;
 import com.list.smoothlist.R;
+import com.list.smoothlist.ViewEditActivity;
 import com.list.smoothlist.database.DBManager;
 import com.list.smoothlist.model.ToDo;
 import com.onurciner.toastox.ToastOX;
@@ -30,6 +35,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     private ArrayList<ToDo> mFilterList;
     private ArrayList<ToDo> mFullList;
+    private Drawable[] mDrawables;
+    private Gson mSerializer;
 
     private Context mContext;
     private CoordinatorLayout mCoord;
@@ -41,6 +48,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         mFullList = fullList;
         mCoord = coord;
         mContext = context;
+        mDrawables = new Drawable[3];
+        mDrawables[0] = ContextCompat.getDrawable(mContext, R.drawable.normal);
+        mDrawables[1] = ContextCompat.getDrawable(mContext, R.drawable.important);
+        mDrawables[2] = ContextCompat.getDrawable(mContext, R.drawable.vimportant);
+        mSerializer = new Gson();
     }
 
     @Override
@@ -57,15 +69,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         holder.mTitle.setText(todo.getTitle());
         holder.mDesc.setText(todo.getDesc());
-        holder.mLevel.setBackground(todo.getLevel());
-        holder.mDate.setText(todo.getDate());
+        holder.mLevel.setBackground(mDrawables[todo.getLevelNb()]);
+        if (todo.getDate() == null)
+            holder.mDate.setText(mContext.getString(R.string.no_date));
+        else
+            holder.mDate.setText(todo.getDate());
 
         holder.mCard.setTag(position);
         holder.mEdit.setTag(position);
 
         holder.mEdit.setOnClickListener(this);
         holder.mCard.setOnLongClickListener(this);
-        holder.mCard.setOnClickListener(this);
 
         if (!todo.isFromDB())
             setAnimation(holder.mCard, position);
@@ -149,5 +163,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onClick(View v) {
         int pos = (Integer) v.getTag();
         ToDo todo = mFilterList.get(pos);
+
+        Intent intent = new Intent(mContext, ViewEditActivity.class);
+        intent.putExtra("todo", mSerializer.toJson(todo));
+        ((MainActivity) mContext).startActivityForResult(intent, 42);
+        ((MainActivity) mContext).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
+
+
 }

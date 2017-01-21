@@ -4,26 +4,20 @@ import android.graphics.drawable.Drawable;
 
 public class ToDo {
 
-    private int mId = -1;
+    private int mId;
     private boolean mSelected;
 
-    private Drawable mLevel;
-    private short isDone = 0;
+    private short isDone;
     private boolean mFromDB;
     private int mLevelNb;
     private String mDesc;
     private String mTitle;
-    private String mDate = "";
+    private String mDate;
 
-    public ToDo() { mFromDB = false; }
-
-    public Drawable getLevel() {
-        return mLevel;
-    }
-
-    public ToDo setLevel(Drawable mLevel) {
-        this.mLevel = mLevel;
-        return this;
+    public ToDo() {
+        mFromDB = false;
+        mId = -1;
+        isDone = 0;
     }
 
     public int getLevelNb() {

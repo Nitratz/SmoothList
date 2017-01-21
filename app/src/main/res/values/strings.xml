@@ -4,7 +4,7 @@
     <string name="description">Description</string>
     <string name="cancel">Annuler</string>
     <string name="ok">OK</string>
-    <string name="edit">Modifier</string>
+    <string name="view">Voir</string>
     <string name="error_fields">Veuillez remplir les champs ci-dessus</string>
     <string name="error_date">Impossible d\'entrez une date inférieur à aujourd\'hui</string>
     <string name="delete_item_question">Voulez vous supprimer cette note ?</string>
@@ -14,9 +14,12 @@
     <string name="done">Fait</string>
     <string name="date">Date</string>
     <string name="time">Heure</string>
+    <string name="no_date">Aucune date</string>
     <string name="search">Rechercher</string>
     <string name="cancel_delete">Suppression annulé</string>
     <string name="delete_note">Note supprimée</string>
+
+    <string name="format_date">yyyy/MM/dd HH:mm</string>
 
     <string-array name="level_array">
         <item>Normal</item>
