@@ -171,7 +171,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (requestCode) {
             case 42:
                 if (resultCode == Activity.RESULT_OK) {
-                    ToastOX.ok(this, "Swaaaaaaaaaag");
+                    Bundle b = data.getExtras();
+                    ToDo todo = b.getParcelable("todo");
+                    updateItem(todo);
                 }
                 break;
             case 21:
@@ -182,6 +184,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
         }
+    }
+
+    private void updateItem(ToDo todo) {
+        DBManager.getInstance(this).updateNote(todo);
+        for (int i = 0; i < mFilterList.size(); i++) {
+            if (mFilterList.get(i).getId() == todo.getId())
+                mFilterList.set(i, todo);
+        }
+        for (int i = 0; i< mList.size(); i++) {
+            if (mList.get(i).getId() == todo.getId())
+                mList.set(i, todo);
+        }
+        mAdapter.notifyDataSetChanged();
     }
 
     private Bitmap getDataFromResult(Intent data) {

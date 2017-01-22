@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
-    android:layout_height="320dp"
+    android:layout_height="350dp"
     android:orientation="vertical">
 
     <ImageView
@@ -12,10 +12,13 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:scaleType="centerCrop"
+        android:background="@android:color/black"
+        android:elevation="5dp"
         android:src="@drawable/banner_dialog" />
 
     <ScrollView
         android:layout_width="match_parent"
+        android:layout_weight="1"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -123,31 +126,35 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="bottom|right"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <Button
-                    android:id="@+id/cancel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:text="@string/cancel"
-                    android:textColor="@color/colorAccent" />
-
-                <Button
-                    android:id="@+id/ok"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:text="@string/ok"
-                    android:textColor="@color/colorAccent" />
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2.1"
+        android:gravity="end"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:paddingStart="5dp"
+        android:layout_marginBottom="5dp"
+        android:paddingEnd="5dp">
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="@string/cancel"
+            android:textColor="@color/colorAccent" />
+
+        <Button
+            android:id="@+id/ok"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="@string/ok"
+            android:textColor="@color/colorAccent" />
+    </LinearLayout>
 </LinearLayout>

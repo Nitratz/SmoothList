@@ -19,6 +19,7 @@
     <string name="search">Rechercher</string>
     <string name="cancel_delete">Suppression annulé</string>
     <string name="delete_note">Note supprimée</string>
+    <string name="finish_edit">Modification terminé</string>
 
     <string name="format_date">yyyy/MM/dd HH:mm</string>
 
@@ -28,4 +29,5 @@
         <item>Très Important</item>
     </string-array>
     <string name="edit">Modifier</string>
+    <string name="todo">À faire</string>
 </resources>

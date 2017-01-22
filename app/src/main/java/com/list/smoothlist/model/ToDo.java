@@ -123,6 +123,11 @@ public class ToDo implements Parcelable {
         mDate = in.readString();
     }
 
+
+
+    /*
+    ** Parcelable Method
+     */
     @Override
     public int describeContents() {
         return 0;
