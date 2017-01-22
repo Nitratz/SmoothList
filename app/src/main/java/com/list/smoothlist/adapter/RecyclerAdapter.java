@@ -2,6 +2,9 @@ package com.list.smoothlist.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
@@ -17,17 +20,14 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.list.smoothlist.MainActivity;
+import com.list.smoothlist.activity.MainActivity;
 import com.list.smoothlist.R;
-import com.list.smoothlist.ViewEditActivity;
+import com.list.smoothlist.activity.ViewEditActivity;
 import com.list.smoothlist.database.DBManager;
 import com.list.smoothlist.model.ToDo;
-import com.onurciner.toastox.ToastOX;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -36,7 +36,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private ArrayList<ToDo> mFilterList;
     private ArrayList<ToDo> mFullList;
     private Drawable[] mDrawables;
-    private Gson mSerializer;
 
     private Context mContext;
     private CoordinatorLayout mCoord;
@@ -52,7 +51,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         mDrawables[0] = ContextCompat.getDrawable(mContext, R.drawable.normal);
         mDrawables[1] = ContextCompat.getDrawable(mContext, R.drawable.important);
         mDrawables[2] = ContextCompat.getDrawable(mContext, R.drawable.vimportant);
-        mSerializer = new Gson();
     }
 
     @Override
@@ -67,6 +65,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         ToDo todo = mFilterList.get(position);
 
+        if (todo.getBanner() != null) {
+            Bitmap image = BitmapFactory.decodeByteArray(todo.getBannerArray(), 0, todo.getBannerArray().length);
+            holder.mHeader.setBackground(new BitmapDrawable(mContext.getResources(), image));
+        }
         holder.mTitle.setText(todo.getTitle());
         holder.mDesc.setText(todo.getDesc());
         holder.mLevel.setBackground(mDrawables[todo.getLevelNb()]);
@@ -77,7 +79,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         holder.mCard.setTag(position);
         holder.mEdit.setTag(position);
-
         holder.mEdit.setOnClickListener(this);
         holder.mCard.setOnLongClickListener(this);
 
@@ -100,6 +101,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         private CardView mCard;
+        private LinearLayout mHeader;
         private TextView mTitle;
         private TextView mDesc;
         private TextView mDate;
@@ -108,6 +110,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         ViewHolder(View v) {
             super(v);
+
+            mHeader = (LinearLayout) v.findViewById(R.id.header);
             mTitle = (TextView) v.findViewById(R.id.title);
             mLevel = (ImageView) v.findViewById(R.id.level);
             mDesc = (TextView) v.findViewById(R.id.desc);
@@ -165,7 +169,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         ToDo todo = mFilterList.get(pos);
 
         Intent intent = new Intent(mContext, ViewEditActivity.class);
-        intent.putExtra("todo", mSerializer.toJson(todo));
+        intent.putExtra("todo", todo);
         ((MainActivity) mContext).startActivityForResult(intent, 42);
         ((MainActivity) mContext).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }

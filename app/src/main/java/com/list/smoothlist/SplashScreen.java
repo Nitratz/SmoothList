@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
+import com.list.smoothlist.activity.MainActivity;
 import com.list.smoothlist.database.DBManager;
 
 public class SplashScreen extends AppCompatActivity {

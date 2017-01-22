@@ -1,13 +1,18 @@
 package com.list.smoothlist.model;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class ToDo {
+import java.io.ByteArrayOutputStream;
+
+public class ToDo implements Parcelable {
 
     private int mId;
-    private boolean mSelected;
 
     private short isDone;
+    private Bitmap mBanner;
     private boolean mFromDB;
     private int mLevelNb;
     private String mDesc;
@@ -15,6 +20,7 @@ public class ToDo {
     private String mDate;
 
     public ToDo() {
+        mBanner = null;
         mFromDB = false;
         mId = -1;
         isDone = 0;
@@ -83,11 +89,67 @@ public class ToDo {
         return this;
     }
 
-    public boolean isSelected() {
-        return mSelected;
+    public ToDo setBanner(Bitmap mBanner) {
+        this.mBanner = mBanner;
+        return this;
     }
 
-    public void setSelected(boolean mSelected) {
-        this.mSelected = mSelected;
+    public ToDo setBannerFromArray(byte[] array) {
+        if (array != null)
+            mBanner = BitmapFactory.decodeByteArray(array, 0, array.length);
+        return this;
     }
+
+    public Bitmap getBanner() {
+        return mBanner;
+    }
+
+    public byte[] getBannerArray() {
+        if (mBanner == null)
+            return null;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        mBanner.compress(Bitmap.CompressFormat.PNG, 100, bos);
+        return bos.toByteArray();
+    }
+
+    protected ToDo(Parcel in) {
+        mId = in.readInt();
+        isDone = (short) in.readValue(short.class.getClassLoader());
+        mBanner = (Bitmap) in.readValue(Bitmap.class.getClassLoader());
+        mFromDB = in.readByte() != 0x00;
+        mLevelNb = in.readInt();
+        mDesc = in.readString();
+        mTitle = in.readString();
+        mDate = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mId);
+        dest.writeValue(isDone);
+        dest.writeValue(mBanner);
+        dest.writeByte((byte) (mFromDB ? 0x01 : 0x00));
+        dest.writeInt(mLevelNb);
+        dest.writeString(mDesc);
+        dest.writeString(mTitle);
+        dest.writeString(mDate);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<ToDo> CREATOR = new Parcelable.Creator<ToDo>() {
+        @Override
+        public ToDo createFromParcel(Parcel in) {
+            return new ToDo(in);
+        }
+
+        @Override
+        public ToDo[] newArray(int size) {
+            return new ToDo[size];
+        }
+    };
 }

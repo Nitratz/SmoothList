@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "56967501686",
+    "firebase_url": "https://smoothlist-ed68e.firebaseio.com",
+    "project_id": "smoothlist-ed68e",
+    "storage_bucket": "smoothlist-ed68e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56967501686:android:54a13887f598c245",
+        "android_client_info": {
+          "package_name": "com.list.smoothlist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56967501686-ug3s997dq2a38ui89ag3lhnsfvaevj81.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.list.smoothlist",
+            "certificate_hash": "6A7F021C21675A8FAAD849B3879D69FD1D370051"
+          }
+        },
+        {
+          "client_id": "56967501686-q5v23te5shlj8lnptum40rc0kj3k1l1n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDM0vZVGqSlZACVxcFFISr7s5XaL2D__34"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56967501686-q5v23te5shlj8lnptum40rc0kj3k1l1n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

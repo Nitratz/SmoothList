@@ -1,25 +1,27 @@
 package com.list.smoothlist.dialog;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
-import android.view.MotionEvent;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.list.smoothlist.activity.MainActivity;
 import com.list.smoothlist.R;
 import com.list.smoothlist.database.DBManager;
 import com.list.smoothlist.model.ToDo;
 import com.onurciner.toastox.ToastOX;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,10 +37,13 @@ public class NewNoteDialog extends Dialog implements View.OnClickListener {
     private Calendar mCalendar;
     private Calendar mSelectedCal;
     private SimpleDateFormat mFormat;
+    private Bitmap mImage;
 
     private EditText mTitle;
     private ImageView mHeader;
     private EditText mDesc;
+    private CheckBox mCheck;
+    private ImageView mPreview;
     private Button mOk;
     private Button mCancel;
     private Spinner mSpinner;
@@ -66,12 +71,20 @@ public class NewNoteDialog extends Dialog implements View.OnClickListener {
         mCancel = (Button) findViewById(R.id.cancel);
         mTitle = (EditText) findViewById(R.id.title);
         mDesc = (EditText) findViewById(R.id.desc);
+        mCheck = (CheckBox) findViewById(R.id.image_check);
+        mPreview = (ImageView) findViewById(R.id.preview);
         mSpinner = (Spinner) findViewById(R.id.spinner);
 
         mDatePicker.setOnClickListener(this);
         mTimePicker.setOnClickListener(this);
         mOk.setOnClickListener(this);
         mCancel.setOnClickListener(this);
+        mCheck.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                openGallery();
+            } else
+                mPreview.setVisibility(View.INVISIBLE);
+        });
 
         show();
     }
@@ -109,6 +122,8 @@ public class NewNoteDialog extends Dialog implements View.OnClickListener {
                 .setLevelNb(mSpinner.getSelectedItemPosition());
         if (!mDatePicker.getText().toString().equals(""))
             todo.setDate(mFormat.format(mSelectedCal.getTime()));
+        if (mCheck.isChecked())
+            todo.setBanner(mImage);
         mList.add(todo);
         mFullList.add(todo);
         DBManager.getInstance(mContext).insertNote(todo);
@@ -146,5 +161,17 @@ public class NewNoteDialog extends Dialog implements View.OnClickListener {
             }, mCalendar.get(Calendar.HOUR_OF_DAY), mCalendar.get(Calendar.MINUTE), true);
         }
         mTimeDialog.show();
+    }
+
+    private void openGallery() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        ((MainActivity) mContext).startActivityForResult(galleryIntent , 21);
+    }
+
+    public void resultGallery(Bitmap image) {
+        image = Bitmap.createScaledBitmap(image, 600, 200, true);
+        mPreview.setBackground(new BitmapDrawable(mContext.getResources(), image));
+        mImage = image;
     }
 }

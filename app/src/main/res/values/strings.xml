@@ -13,6 +13,7 @@
     <string name="no">Non</string>
     <string name="done">Fait</string>
     <string name="date">Date</string>
+    <string name="banner">Bannières</string>
     <string name="time">Heure</string>
     <string name="no_date">Aucune date</string>
     <string name="search">Rechercher</string>
@@ -26,4 +27,5 @@
         <item>Important</item>
         <item>Très Important</item>
     </string-array>
+    <string name="edit">Modifier</string>
 </resources>

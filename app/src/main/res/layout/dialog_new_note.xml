@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
-    android:layout_height="wrap_content"
+    android:layout_height="320dp"
     android:orientation="vertical">
 
     <ImageView
@@ -98,6 +98,29 @@
                     android:layout_marginStart="1dp"
                     android:layout_weight="1"
                     android:hint="@string/time" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/image_check"
+                    android:layout_width="match_parent"
+                    android:text="@string/banner"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:id="@+id/preview"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:layout_height="match_parent" />
+
             </LinearLayout>
 
             <LinearLayout

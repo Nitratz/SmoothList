@@ -19,6 +19,7 @@ public class DBManager extends SQLiteOpenHelper {
     private static final String TABLE_TODO = "todo";
     private static final String C_ID = "id_todo";
     private static final String C_TITLE = "title";
+    private static final String C_IMAGE = "image";
     private static final String C_DATE = "date";
     private static final String C_DESC = "desc";
     private static final String C_DONE = "is_done";
@@ -29,6 +30,7 @@ public class DBManager extends SQLiteOpenHelper {
         TITLE,
         DESC,
         DATE,
+        IMAGE,
         DONE,
         LEVEL,
     }
@@ -47,7 +49,10 @@ public class DBManager extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_TODO + "(id_todo INTEGER PRIMARY KEY," + "title TEXT, desc TEXT, date TEXT, is_done SHORT, level INTEGER)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_TODO + "("+ C_ID + " INTEGER PRIMARY KEY,"
+                + C_TITLE + " TEXT," + C_DESC + " TEXT,"
+                + C_DATE + " TEXT, " + C_IMAGE + " BLOB, "
+                + C_DONE + " SHORT, " + C_LEVEL + " INTEGER)");
     }
 
     @Override
@@ -64,6 +69,7 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(C_DESC, todo.getDesc());
         values.put(C_DONE, todo.isDone());
         values.put(C_DATE, todo.getDate());
+        values.put(C_IMAGE, todo.getBannerArray());
         values.put(C_LEVEL, todo.getLevelNb());
 
         long id = db.insert(TABLE_TODO, null, values);
@@ -84,6 +90,7 @@ public class DBManager extends SQLiteOpenHelper {
         args.put(C_TITLE, todo.getTitle());
         args.put(C_DESC, todo.getDesc());
         args.put(C_DONE, todo.isDone());
+        args.put(C_IMAGE, todo.getBannerArray());
         args.put(C_DATE, todo.getDate());
         args.put(C_LEVEL, todo.getLevelNb());
 
@@ -104,6 +111,7 @@ public class DBManager extends SQLiteOpenHelper {
                         .setTitle(cursor.getString(COLUMNS.TITLE.ordinal()))
                         .setDesc(cursor.getString(COLUMNS.DESC.ordinal()))
                         .setDate(cursor.getString(COLUMNS.DATE.ordinal()))
+                        .setBannerFromArray(cursor.getBlob(COLUMNS.IMAGE.ordinal()))
                         .setDone(cursor.getShort(COLUMNS.DONE.ordinal()))
                         .setLevelNb(cursor.getInt(COLUMNS.LEVEL.ordinal()));
                 list.add(todo);

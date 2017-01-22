@@ -47,7 +47,7 @@
             android:id="@+id/header"
             android:background="#FAFAFA"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:padding="4dp"
             android:paddingStart="5dp"
             android:orientation="horizontal">
@@ -91,11 +91,11 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:fontFamily="sans-serif"
-            android:lines="4"
-            android:maxLines="4"
+            android:lines="3"
+            android:maxLines="3"
             android:ellipsize="end"
             android:layout_below="@id/header"
-            android:padding="1dp"
+            android:padding="5dp"
             android:text="Text description appear here to describe note\nText description appear here to describe note\nText description appear here to describe note\n"
             android:textSize="15sp" />
 

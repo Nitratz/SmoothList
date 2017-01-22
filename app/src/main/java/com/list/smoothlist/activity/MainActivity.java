@@ -1,9 +1,11 @@
-package com.list.smoothlist;
+package com.list.smoothlist.activity;
 
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -20,12 +22,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.list.smoothlist.R;
 import com.list.smoothlist.adapter.RecyclerAdapter;
 import com.list.smoothlist.database.DBManager;
 import com.list.smoothlist.dialog.NewNoteDialog;
 import com.list.smoothlist.model.ToDo;
 import com.onurciner.toastox.ToastOX;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -164,10 +168,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 42) {
-            if (resultCode == Activity.RESULT_OK) {
-                ToastOX.ok(this, "Swaaaaaaaaaag");
+        switch (requestCode) {
+            case 42:
+                if (resultCode == Activity.RESULT_OK) {
+                    ToastOX.ok(this, "Swaaaaaaaaaag");
+                }
+                break;
+            case 21:
+                if (resultCode == Activity.RESULT_OK) {
+                    Bitmap image = getDataFromResult(data);
+                    if (image != null)
+                        mDialog.resultGallery(image);
+                }
+                break;
+        }
+    }
+
+    private Bitmap getDataFromResult(Intent data) {
+        if (data != null) {
+            try {
+                return MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
+        return null;
     }
 }

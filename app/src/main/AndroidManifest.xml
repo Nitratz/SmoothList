@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:name=".MyApplication"
         android:theme="@style/AppNoActionBar">
-        <activity android:name=".MainActivity"
+        <activity android:name=".activity.MainActivity"
             android:screenOrientation="portrait">
         </activity>
 
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ViewEditActivity"
+        <activity android:name=".activity.ViewEditActivity"
             android:screenOrientation="portrait">
         </activity>
     </application>
