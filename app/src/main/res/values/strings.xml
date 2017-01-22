@@ -21,7 +21,7 @@
     <string name="delete_note">Note supprimée</string>
     <string name="finish_edit">Modification terminé</string>
 
-    <string name="format_date">yyyy/MM/dd HH:mm</string>
+    <string name="format_date">dd/MM/yyyy HH:mm</string>
 
     <string-array name="level_array">
         <item>Normal</item>
