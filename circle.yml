@@ -9,4 +9,4 @@ test:
   - emulator -avd circleci-android24 -no-window:background:true parallel:true
   - circle-android wait-for-boot
   - ./gradlew assembleDebug assembleRelease
-  - ./gradlew connectedDebugAndroidTest
+  - ./gradlew connectedAndroidTest
