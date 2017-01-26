@@ -4,6 +4,16 @@ machine:
 dependencies:
  pre:
   - ( sleep 5 && while [ 1 ]; do sleep 1; echo y; done ) | android update sdk --no-ui --all --filter "tools,android-25,build-tools-25.0.2,platform-tools,extra-google-m2repository,extra-android-m2repository,extra-android-support,extra-google-google_play_services"
+  - echo y | android update sdk --no-ui --all --filter "sys-img-armeabi-v7a-google_apis-24"
+  # Create the android 24 AVD
+  - echo no | android create avd -n circleci-android24-googleapis -t 'android-24' --abi google_apis/armeabi-v7a
+  - |
+   # software rendering is broken in revision 10, we'll use revision 08
+    wget "https://dl-ssl.google.com/android/repository/sys-img/google_apis/armeabi-v7a-24_r08.zip"
+    unzip armeabi-v7a-24_r08.zip
+    # overwrite some of the new files with older files
+    mv armeabi-v7a/* /usr/local/android-sdk-linux/system-images/android-24/google_apis/armeabi-v7a
+    rm armeabi-v7a-24_r08.zip
 test:
  override:
   - ./gradlew assembleDebug assembleRelease
