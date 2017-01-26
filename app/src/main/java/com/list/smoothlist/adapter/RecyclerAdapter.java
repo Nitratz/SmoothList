@@ -69,6 +69,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             Bitmap image = BitmapFactory.decodeByteArray(todo.getBannerArray(), 0, todo.getBannerArray().length);
             holder.mHeader.setBackground(new BitmapDrawable(mContext.getResources(), image));
         }
+        else
+            holder.mHeader.setBackgroundColor(ContextCompat.getColor(mContext, R.color.card_header));
+        if (todo.isDone() == 1)
+            holder.isDone.setVisibility(View.VISIBLE);
+        else
+            holder.isDone.setVisibility(View.GONE);
         holder.mTitle.setText(todo.getTitle());
         holder.mDesc.setText(todo.getDesc());
         holder.mLevel.setBackground(mDrawables[todo.getLevelNb()]);
@@ -106,6 +112,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         private TextView mDesc;
         private TextView mDate;
         private Button mEdit;
+        private LinearLayout isDone;
         private ImageView mLevel;
 
         ViewHolder(View v) {
@@ -115,6 +122,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             mTitle = (TextView) v.findViewById(R.id.title);
             mLevel = (ImageView) v.findViewById(R.id.level);
             mDesc = (TextView) v.findViewById(R.id.desc);
+            isDone = (LinearLayout) v.findViewById(R.id.is_done);
             mDate = (TextView) v.findViewById(R.id.date_field);
             mEdit = (Button) v.findViewById(R.id.edit);
             mCard = (CardView) v.findViewById(R.id.card);
@@ -131,19 +139,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             Log.d("RecyclerDeleteNote", "IsItemDeleted ? " + ret);
         };
 
-        handler.postDelayed(run, 3600);
+        handler.postDelayed(run, 2510);
         mFilterList.remove(pos);
-        removeInFullList(todo);
+        int fPos = removeInFullList(todo);
         notifyItemRemoved(pos);
         notifyItemRangeChanged(pos, getItemCount());
 
         Snackbar snackbar = Snackbar
-                .make(mCoord, mContext.getString(R.string.delete_note), 3500)
+                .make(mCoord, mContext.getString(R.string.delete_note), 2500)
                 .setAction("Test", view -> {
 
                 })
                 .setAction(mContext.getString(R.string.cancel), view -> {
                     mFilterList.add(pos, todo);
+                    mFullList.add(fPos, todo);
                     handler.removeCallbacks(run);
                     notifyDataSetChanged();
                     Snackbar snackbar1 = Snackbar.make(mCoord, mContext.getString(R.string.cancel_delete), 1000);
@@ -153,14 +162,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return true;
     }
 
-    private void removeInFullList(ToDo _todo) {
+    private int removeInFullList(ToDo _todo) {
         for (ToDo todo : mFullList) {
             if (todo.equals(_todo)) {
                 int pos = mFullList.indexOf(todo);
                 mFullList.remove(pos);
-                break;
+                return pos;
             }
         }
+        return -1;
     }
 
     @Override

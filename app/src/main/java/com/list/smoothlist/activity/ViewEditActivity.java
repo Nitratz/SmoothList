@@ -194,7 +194,7 @@ public class ViewEditActivity extends AppCompatActivity implements View.OnClickL
         date = mDate.getText().toString();
         time = mTime.getText().toString();
         String dateTime = date + " " + time;
-        if (mTodo.getDate() != null && mTodo.getDate().equals(dateTime))
+        if (mTodo.getDate() == null || mTodo.getDate().equals(dateTime))
             return;
         if (!date.equals(mPreviousDate) && !time.equals(mPreviousTime))
             mTodo.setDate(dateTime);
@@ -202,7 +202,6 @@ public class ViewEditActivity extends AppCompatActivity implements View.OnClickL
             mTodo.setDate(date + " " + mPreviousTime);
         else if (!date.equals(mPreviousTime))
             mTodo.setDate(mPreviousDate + " " + time);
-
     }
 
     private void openGallery() {

@@ -30,4 +30,6 @@
     <string name="banner">Banner</string>
     <string name="todo">Todo</string>
     <string name="finish_edit">Edit finished</string>
+    <string name="search_date">By date</string>
+    <string name="search_importance">By importance</string>
 </resources>

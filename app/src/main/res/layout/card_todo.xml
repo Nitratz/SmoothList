@@ -21,12 +21,12 @@
             android:id="@+id/is_done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left|bottom"
+            android:layout_alignParentBottom="true"
             android:layout_marginBottom="5dp"
             android:layout_marginStart="5dp"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="gone"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="20dp"
@@ -45,7 +45,7 @@
 
         <LinearLayout
             android:id="@+id/header"
-            android:background="#FAFAFA"
+            android:background="@color/card_header"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:padding="4dp"

@@ -16,14 +16,10 @@
         android:elevation="5dp"
         android:src="@drawable/banner_dialog" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="match_parent">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:paddingBottom="4dp"
             android:orientation="vertical">
 
@@ -125,9 +121,7 @@
                     android:layout_height="match_parent" />
 
             </LinearLayout>
-
         </LinearLayout>
-    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"

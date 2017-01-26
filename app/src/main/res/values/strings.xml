@@ -17,6 +17,9 @@
     <string name="time">Heure</string>
     <string name="no_date">Aucune date</string>
     <string name="search">Rechercher</string>
+    <string name="search_date">Par date</string>
+    <string name="search_importance">Par importance</string>
+    <string name="search_title">Par titre</string>
     <string name="cancel_delete">Suppression annulé</string>
     <string name="delete_note">Note supprimée</string>
     <string name="finish_edit">Modification terminé</string>

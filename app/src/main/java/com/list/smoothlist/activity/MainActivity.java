@@ -31,6 +31,8 @@ import com.onurciner.toastox.ToastOX;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -69,15 +71,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecycler.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy){
-                if (dy > 0 || dy < 0 && mFab.isShown())
+                if (dy > 0 && mFab.isShown())
                     mFab.hide();
+                else
+                    mFab.show();
             }
 
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE){
-                    mFab.show();
-                }
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
@@ -140,7 +141,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //filterRecyclerView(query);
                 if(!searchView.isIconified()) {
                     searchView.setIconified(true);
                 }
@@ -162,8 +162,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.action_clear:
                 filterRecyclerView("");
                 break;
+            case R.id.search_date:
+                filterByDate();
+                break;
+            case R.id.search_importance:
+                filterByImportance();
+                break;
+            case R.id.search_title:
+                filterByTitle();
+                break;
         }
         return true;
+    }
+
+    private void filterByDate() {
+        Collections.sort(mFilterList, (n1, n2) -> {
+            if (n1.getDate() == null || n2.getDate() == null)
+                return 0;
+            return n1.getDate().compareTo(n2.getDate());
+        });
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void filterByImportance() {
+        Collections.sort(mFilterList, (n1, n2) -> {
+            if (n1.getLevelNb() > n2.getLevelNb())
+                return -1;
+            else if (n1.getLevelNb() == n2.getLevelNb())
+                return 0;
+            else
+                return 1;
+        });
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void filterByTitle() {
+        Collections.sort(mFilterList, (n1, n2) -> n1.getTitle().compareTo(n2.getTitle()));
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override

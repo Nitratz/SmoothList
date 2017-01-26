@@ -14,4 +14,19 @@
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView"
         android:title="@string/search" />
+
+    <item
+        android:id="@+id/search_date"
+        app:showAsAction="never"
+        android:title="@string/search_date" />
+
+    <item
+        android:id="@+id/search_title"
+        app:showAsAction="never"
+        android:title="@string/search_title" />
+
+    <item
+        android:id="@+id/search_importance"
+        app:showAsAction="never"
+        android:title="@string/search_importance" />
 </menu>
