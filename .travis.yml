@@ -7,6 +7,7 @@ android:
     - sys-img-armeabi-v7a-$ANDROID_TARGET
     - sys-img-armeabi-v7a-$ANDROID_OLD_TARGET
     - android-25
+    - android-22
     - extra-google-m2repository
     - extra-android-m2repository
   licenses:
