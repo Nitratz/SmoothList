@@ -1,0 +1,14 @@
+machine:
+  environment:
+    ANDROID_HOME: /home/ubuntu/android
+  java:
+    version: oraclejdk8
+	
+test:
+  override:
+    - emulator -avd circleci-android24 -no-window:
+        background: true
+        parallel: true
+    - circle-android wait-for-boot
+    - ./gradlew assembleDebug assembleRelease
+    - ./gradlew connectedDebugAndroidTest
