@@ -17,7 +17,7 @@ dependencies:
 test:
  override:
   - ./gradlew assembleDebug assembleRelease
-  - emulator -avd circleci-android24 -no-window:
+  - emulator -avd circleci-android24-googleapis -no-window -gpu off:
         background: true
         parallel: true
   - circle-android wait-for-boot
