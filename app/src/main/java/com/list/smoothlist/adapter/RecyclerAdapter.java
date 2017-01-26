@@ -139,14 +139,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             Log.d("RecyclerDeleteNote", "IsItemDeleted ? " + ret);
         };
 
-        handler.postDelayed(run, 2510);
+        handler.postDelayed(run, 2010);
         mFilterList.remove(pos);
         int fPos = removeInFullList(todo);
         notifyItemRemoved(pos);
         notifyItemRangeChanged(pos, getItemCount());
 
         Snackbar snackbar = Snackbar
-                .make(mCoord, mContext.getString(R.string.delete_note), 2500)
+                .make(mCoord, mContext.getString(R.string.delete_note), 2000)
                 .setAction("Test", view -> {
 
                 })
