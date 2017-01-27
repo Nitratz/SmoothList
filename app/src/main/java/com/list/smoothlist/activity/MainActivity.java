@@ -1,10 +1,16 @@
 package com.list.smoothlist.activity;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +23,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,12 +34,14 @@ import com.list.smoothlist.adapter.RecyclerAdapter;
 import com.list.smoothlist.database.DBManager;
 import com.list.smoothlist.dialog.NewNoteDialog;
 import com.list.smoothlist.model.ToDo;
+import com.list.smoothlist.receiver.NotificationPublisher;
 import com.onurciner.toastox.ToastOX;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -243,5 +252,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
         return null;
+    }
+
+    public void scheduleNotification(long futureInMillis, ToDo todo) {
+
+        Intent notificationIntent = new Intent(this, NotificationPublisher.class);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, todo.getId());
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Log.d("UtilAlarm", "Pending intent is : " + pendingIntent);
+        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, futureInMillis, pendingIntent);
+        Log.d("UtilAlarm", "Alarm set for " + new Date(futureInMillis).toString());
     }
 }

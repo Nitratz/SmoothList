@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.list.smoothlist.Util;
 import com.list.smoothlist.activity.MainActivity;
 import com.list.smoothlist.R;
 import com.list.smoothlist.database.DBManager;
@@ -126,6 +127,8 @@ public class NewNoteDialog extends Dialog implements View.OnClickListener {
         mList.add(todo);
         mFullList.add(todo);
         DBManager.getInstance(mContext).insertNote(todo);
+        if (!mDatePicker.getText().toString().equals(""))
+            ((MainActivity) mContext).scheduleNotification(mSelectedCal.getTime().getTime(), todo);
         dismiss();
     }
 

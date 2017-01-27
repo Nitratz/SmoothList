@@ -1,4 +1,4 @@
-package com.list.smoothlist;
+package com.list.smoothlist.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
+import com.list.smoothlist.R;
 import com.list.smoothlist.activity.MainActivity;
 import com.list.smoothlist.database.DBManager;
 

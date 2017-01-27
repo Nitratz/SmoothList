@@ -183,6 +183,4 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         ((MainActivity) mContext).startActivityForResult(intent, 42);
         ((MainActivity) mContext).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
-
-
 }

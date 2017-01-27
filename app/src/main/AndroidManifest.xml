@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.list.smoothlist">
 
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,11 +12,14 @@
         android:supportsRtl="true"
         android:name=".MyApplication"
         android:theme="@style/AppNoActionBar">
+        <receiver android:name=".receiver.NotificationPublisher"
+            android:process=":remote"/>
+
         <activity android:name=".activity.MainActivity"
             android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".SplashScreen"
+        <activity android:name=".activity.SplashScreen"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

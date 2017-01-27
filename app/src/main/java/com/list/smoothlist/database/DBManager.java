@@ -97,11 +97,31 @@ public class DBManager extends SQLiteOpenHelper {
         return db.update(TABLE_TODO, args, C_ID + " = " + todo.getId(), null) > 0;
     }
 
+    public ToDo getNoteById(int id) {
+        SQLiteDatabase db = getReadableDatabase();
+        ToDo todo = new ToDo();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_TODO + " WHERE " + C_ID + " = " + id, null);
+        if (cursor.moveToFirst()) {
+            todo.setId(cursor.getInt(COLUMNS.ID.ordinal()))
+                    .setTitle(cursor.getString(COLUMNS.TITLE.ordinal()))
+                    .setDesc(cursor.getString(COLUMNS.DESC.ordinal()))
+                    .setDate(cursor.getString(COLUMNS.DATE.ordinal()))
+                    .setBannerFromArray(cursor.getBlob(COLUMNS.IMAGE.ordinal()))
+                    .setDone(cursor.getShort(COLUMNS.DONE.ordinal()))
+                    .setLevelNb(cursor.getInt(COLUMNS.LEVEL.ordinal()));
+            cursor.close();
+        }
+        else
+            return null;
+        return todo;
+    }
+
     public ArrayList<ToDo> getAllNotes() {
         ArrayList<ToDo> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM "+ TABLE_TODO, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_TODO, null);
 
         if (cursor.moveToFirst()) {
             do {
