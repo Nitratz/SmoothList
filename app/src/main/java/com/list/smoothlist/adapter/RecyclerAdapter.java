@@ -68,21 +68,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         if (todo.getBanner() != null) {
             Bitmap image = BitmapFactory.decodeByteArray(todo.getBannerArray(), 0, todo.getBannerArray().length);
             holder.mHeader.setBackground(new BitmapDrawable(mContext.getResources(), image));
-        }
-        else
+        } else
             holder.mHeader.setBackgroundColor(ContextCompat.getColor(mContext, R.color.card_header));
-        if (todo.isDone() == 1)
-            holder.isDone.setVisibility(View.VISIBLE);
-        else
-            holder.isDone.setVisibility(View.GONE);
-        holder.mTitle.setText(todo.getTitle());
-        holder.mDesc.setText(todo.getDesc());
-        holder.mLevel.setBackground(mDrawables[todo.getLevelNb()]);
+        if (todo.isDone() == 1) {
+            holder.mImageDone.setBackground(ContextCompat.getDrawable(mContext, R.drawable.checked_done));
+            holder.mTextDone.setText(mContext.getString(R.string.done));
+        } else {
+            holder.mImageDone.setBackground(ContextCompat.getDrawable(mContext, R.drawable.todo));
+            holder.mTextDone.setText(mContext.getString(R.string.todo));
+        }
         if (todo.getDate() == null)
             holder.mDate.setText(mContext.getString(R.string.no_date));
         else
             holder.mDate.setText(todo.getDate());
-
+        holder.mTitle.setText(todo.getTitle());
+        holder.mDesc.setText(todo.getDesc());
+        holder.mLevel.setBackground(mDrawables[todo.getLevelNb()]);
         holder.mCard.setTag(position);
         holder.mEdit.setTag(position);
         holder.mEdit.setOnClickListener(this);
@@ -112,7 +113,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         private TextView mDesc;
         private TextView mDate;
         private Button mEdit;
-        private LinearLayout isDone;
+        private ImageView mImageDone;
+        private TextView mTextDone;
         private ImageView mLevel;
 
         ViewHolder(View v) {
@@ -122,7 +124,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             mTitle = (TextView) v.findViewById(R.id.title);
             mLevel = (ImageView) v.findViewById(R.id.level);
             mDesc = (TextView) v.findViewById(R.id.desc);
-            isDone = (LinearLayout) v.findViewById(R.id.is_done);
+            mImageDone = (ImageView) v.findViewById(R.id.image_done);
+            mTextDone = (TextView) v.findViewById(R.id.text_done);
             mDate = (TextView) v.findViewById(R.id.date_field);
             mEdit = (Button) v.findViewById(R.id.edit);
             mCard = (CardView) v.findViewById(R.id.card);

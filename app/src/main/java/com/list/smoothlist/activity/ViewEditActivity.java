@@ -16,6 +16,7 @@ import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +32,7 @@ import com.list.smoothlist.receiver.NotificationPublisher;
 import com.onurciner.toastox.ToastOX;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -49,6 +51,7 @@ public class ViewEditActivity extends AppCompatActivity implements View.OnClickL
     private Spinner mSpinner;
     private Switch mSwitch;
     private TextView mDone;
+    private ImageView mImageDone;
     private EditText mDate;
     private EditText mTime;
     private Button mFinishEdit;
@@ -71,6 +74,7 @@ public class ViewEditActivity extends AppCompatActivity implements View.OnClickL
         mPreview = (ImageView) findViewById(R.id.preview);
         mSwitch = (Switch) findViewById(R.id.switch_done);
         mDone = (TextView) findViewById(R.id.text_switch);
+        mImageDone = (ImageView) findViewById(R.id.image_done);
         mSpinner = (Spinner) findViewById(R.id.spinner_level);
         mTitle = (EditText) findViewById(R.id.title);
         mDesc = (EditText) findViewById(R.id.desc);
@@ -83,10 +87,13 @@ public class ViewEditActivity extends AppCompatActivity implements View.OnClickL
         mDate.setOnClickListener(this);
         mTime.setOnClickListener(this);
         mSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked)
+            if (isChecked) {
+                mImageDone.setBackground(ContextCompat.getDrawable(this, R.drawable.checked_done));
                 mDone.setText(getString(R.string.done));
-            else
+            } else {
+                mImageDone.setBackground(ContextCompat.getDrawable(this, R.drawable.todo));
                 mDone.setText(getString(R.string.todo));
+            }
         });
 
         if (mTodo != null)
@@ -101,9 +108,11 @@ public class ViewEditActivity extends AppCompatActivity implements View.OnClickL
         }
         if (mTodo.isDone() == 1) {
             mSwitch.setChecked(true);
+            mImageDone.setBackground(ContextCompat.getDrawable(this, R.drawable.checked_done));
             mDone.setText(getString(R.string.done));
         } else {
             mSwitch.setChecked(false);
+            mImageDone.setBackground(ContextCompat.getDrawable(this, R.drawable.todo));
             mDone.setText(getString(R.string.todo));
         }
         mTitle.setText(mTodo.getTitle());
@@ -210,6 +219,12 @@ public class ViewEditActivity extends AppCompatActivity implements View.OnClickL
             mTodo.setDate(date + " " + mPreviousTime);
         else if (!date.equals(mPreviousTime))
             mTodo.setDate(mPreviousDate + " " + time);
+        NotificationPublisher.unScheduleNotification(this, mTodo);
+        try {
+            NotificationPublisher.scheduleNotification(this, mFormat.parse(mTodo.getDate()).getTime(), mTodo);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     private void openGallery() {

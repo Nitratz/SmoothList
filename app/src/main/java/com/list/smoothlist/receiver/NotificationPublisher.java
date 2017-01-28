@@ -59,7 +59,6 @@ public class NotificationPublisher extends BroadcastReceiver {
         notification.ledOnMS = 200;
         notification.ledOffMS = 500;
 
-
         wakeLock.acquire();
         notificationManager.notify(id, notification);
         vibrator.vibrate(400);
@@ -84,6 +83,7 @@ public class NotificationPublisher extends BroadcastReceiver {
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
+        Log.d("UtilAlarm", "Alarm canceled for id : " + todo.getId());
     }
 
     private int setLightByLevel(int level) {
