@@ -13,6 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.media.RingtoneManager;
 import android.os.PowerManager;
 import android.os.Vibrator;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
@@ -29,7 +30,7 @@ public class NotificationPublisher extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        Notification.BigTextStyle big = new Notification.BigTextStyle();
         int id = intent.getIntExtra(NOTIFICATION_ID, 0);
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wakeLock = pm.newWakeLock((PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP), "TAG");
@@ -39,29 +40,31 @@ public class NotificationPublisher extends BroadcastReceiver {
         Notification.Builder builder = new Notification.Builder(context);
         int ledColor;
         if (todo != null) {
+            big.bigText(todo.getDesc());
             builder.setContentTitle(todo.getTitle());
             builder.setContentText(todo.getDesc());
             builder.setLargeIcon(setLargeIconByLevel(context, todo.getLevelNb()));
             ledColor = setLightByLevel(todo.getLevelNb());
         }
         else {
-            builder.setContentTitle("New notification from SmoothList");
-            builder.setContentText("a Task is finished");
+            builder.setContentTitle(context.getString(R.string.new_notif));
+            builder.setContentText(context.getString(R.string.notif_todo));
             builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
             ledColor = 0xFF0000FF;
         }
+        builder.setStyle(big);
         builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
         builder.setSmallIcon(R.mipmap.ic_launcher);
 
         Notification notification = builder.build();
         notification.ledARGB = ledColor;
         notification.flags = Notification.FLAG_SHOW_LIGHTS;
+        notification.defaults |= Notification.DEFAULT_VIBRATE;
         notification.ledOnMS = 200;
         notification.ledOffMS = 500;
 
         wakeLock.acquire();
         notificationManager.notify(id, notification);
-        vibrator.vibrate(400);
         wakeLock.release();
     }
 

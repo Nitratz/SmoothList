@@ -34,4 +34,6 @@
     <string name="search_importance">By importance</string>
     <string name="search_title">By title</string>
     <string name="share">Share</string>
+    <string name="new_notif">New notification</string>
+    <string name="notif_todo">Open the app, you have to do something !</string>
 </resources>
