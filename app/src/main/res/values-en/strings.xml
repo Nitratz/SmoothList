@@ -36,4 +36,11 @@
     <string name="share">Share</string>
     <string name="new_notif">New notification</string>
     <string name="notif_todo">Open the app, you have to do something !</string>
+    <string name="desc_app">A simple application with a smooth design to simplify tasks creation !</string>
+    <string name="dialog_tuto">You can create some tasks easily and quickly !</string>
+    <string name="dialog_tuto_title">Creating task</string>
+    <string name="menu_tuto">All task are displayed here. To delete one task, long press on the task you want to delete, you will be able to undo this operation !</string>
+    <string name="menu_tuto_title">Tasks list</string>
+    <string name="edit_tuto">You can edit the task information, change the due date and edit the picture representation !</string>
+    <string name="edit_tuto_title">Editing Task</string>
 </resources>

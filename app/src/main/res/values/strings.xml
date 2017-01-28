@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">SmoothList</string>
+    <string name="desc_app">Une application simple avec un design sobre pour crée vos tâches en toutes simplicité !</string>
+
+    <string name="dialog_tuto_title">Création de tâche</string>
+    <string name="dialog_tuto">Vous pouvez crée des tâches rapidement et facilement !</string>
+    <string name="menu_tuto_title">Liste de tâches</string>
+    <string name="menu_tuto">Toutes les tâches sont affichés ici. Pour supprimer une tâche, rester longuement appuyé sur celle que vous voulez supprimer, vous pourrez annuler l\'opération dans les secondes qui suivent !</string>
+    <string name="edit_tuto_title">Modifier une tâche</string>
+    <string name="edit_tuto">Vous pouvez modifier les informations de la tâche, changer l\'heure de rappel et modifier l\'image de représentation !</string>
     <string name="title">Titre</string>
     <string name="description">Description</string>
     <string name="cancel">Annuler</string>
