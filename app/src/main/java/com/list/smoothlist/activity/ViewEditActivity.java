@@ -13,6 +13,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.provider.CalendarContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
@@ -55,6 +56,7 @@ public class ViewEditActivity extends AppCompatActivity implements View.OnClickL
     private EditText mDate;
     private EditText mTime;
     private Button mFinishEdit;
+    private Button mShare;
 
     private ToDo mTodo;
     private Bitmap mImage;
@@ -74,6 +76,7 @@ public class ViewEditActivity extends AppCompatActivity implements View.OnClickL
         mPreview = (ImageView) findViewById(R.id.preview);
         mSwitch = (Switch) findViewById(R.id.switch_done);
         mDone = (TextView) findViewById(R.id.text_switch);
+        mShare = (Button) findViewById(R.id.share);
         mImageDone = (ImageView) findViewById(R.id.image_done);
         mSpinner = (Spinner) findViewById(R.id.spinner_level);
         mTitle = (EditText) findViewById(R.id.title);
@@ -84,6 +87,7 @@ public class ViewEditActivity extends AppCompatActivity implements View.OnClickL
 
         mPreview.setOnClickListener(this);
         mFinishEdit.setOnClickListener(this);
+        mShare.setOnClickListener(this);
         mDate.setOnClickListener(this);
         mTime.setOnClickListener(this);
         mSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -98,6 +102,43 @@ public class ViewEditActivity extends AppCompatActivity implements View.OnClickL
 
         if (mTodo != null)
             setDataFromToDo();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.date_picker:
+                openDatePicker();
+                break;
+            case R.id.time_picker:
+                openTimePicker();
+                break;
+            case R.id.edit_finished:
+                editFinish();
+                break;
+            case R.id.preview:
+                openGallery();
+                break;
+            case R.id.share:
+                shareOnCalendar();
+                break;
+        }
+    }
+
+    private void shareOnCalendar() {
+        if (mTodo.getDate() != null) {
+            try {
+                Intent cal = new Intent(Intent.ACTION_INSERT)
+                        .setData(CalendarContract.Events.CONTENT_URI)
+                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, mFormat.parse(mTodo.getDate()))
+                        .putExtra(CalendarContract.Events.TITLE, mTodo.getTitle())
+                        .putExtra(CalendarContract.Events.DESCRIPTION, mTodo.getDesc());
+                startActivity(cal);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } else
+            ToastOX.error(this, "");
     }
 
     private void setDataFromToDo() {
@@ -163,24 +204,6 @@ public class ViewEditActivity extends AppCompatActivity implements View.OnClickL
             }, mCalendar.get(Calendar.HOUR_OF_DAY), mCalendar.get(Calendar.MINUTE), true);
         }
         mTimeDialog.show();
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.date_picker:
-                openDatePicker();
-                break;
-            case R.id.time_picker:
-                openTimePicker();
-                break;
-            case R.id.edit_finished:
-                editFinish();
-                break;
-            case R.id.preview:
-                openGallery();
-                break;
-        }
     }
 
     private void editFinish() {

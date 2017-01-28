@@ -22,6 +22,7 @@
     <string name="search_title">Par titre</string>
     <string name="cancel_delete">Suppression annulé</string>
     <string name="delete_note">Note supprimée</string>
+    <string name="share">Partager</string>
     <string name="finish_edit">Modification terminé</string>
 
     <string name="format_date">dd/MM/yyyy HH:mm</string>

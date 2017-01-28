@@ -33,4 +33,5 @@
     <string name="search_date">By date</string>
     <string name="search_importance">By importance</string>
     <string name="search_title">By title</string>
+    <string name="share">Share</string>
 </resources>
