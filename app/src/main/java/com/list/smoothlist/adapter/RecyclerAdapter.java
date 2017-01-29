@@ -93,6 +93,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             setAnimation(holder.mCard, position);
     }
 
+    /**
+     * @param viewToAnimate Item to animate in list
+     * @param position Position of the item to animate
+     */
     private void setAnimation(View viewToAnimate, int position) {
         if (position > lastPosition) {
             Animation animation = AnimationUtils.loadAnimation(mContext, android.R.anim.slide_in_left);
@@ -165,6 +169,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return true;
     }
 
+
+    /**
+     * @param _todo Item to remove in list
+     * @return Position of the item removed
+     */
     private int removeInFullList(ToDo _todo) {
         for (ToDo todo : mFullList) {
             if (todo.equals(_todo)) {

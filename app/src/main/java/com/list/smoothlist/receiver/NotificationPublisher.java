@@ -68,6 +68,11 @@ public class NotificationPublisher extends BroadcastReceiver {
         wakeLock.release();
     }
 
+    /**
+     * @param context Need to create Intents
+     * @param futureInMillis Due date in milliseconds
+     * @param todo Item to schedule the alarm
+     */
     public static void scheduleNotification(Context context, long futureInMillis, ToDo todo) {
 
         Intent notificationIntent = new Intent(context, NotificationPublisher.class);
@@ -79,6 +84,10 @@ public class NotificationPublisher extends BroadcastReceiver {
         Log.d("UtilAlarm", "Alarm set for " + new Date(futureInMillis).toString() + " with id : " + todo.getId());
     }
 
+    /**
+     * @param context Need to create Intents
+     * @param todo Item to unschedule the alarm
+     */
     public static void unScheduleNotification(Context context, ToDo todo) {
         Intent notificationIntent = new Intent(context, NotificationPublisher.class);
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, todo.getId());

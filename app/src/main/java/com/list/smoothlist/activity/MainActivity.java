@@ -102,6 +102,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * @param filter String to filter the list
+     */
     private void filterRecyclerView(String filter){
         filter = filter.toLowerCase();
         mFilterList.clear();
@@ -230,6 +233,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * @param todo Update the item in list
+     */
     private void updateItem(ToDo todo) {
         DBManager.getInstance(this).updateNote(todo);
         for (int i = 0; i < mFilterList.size(); i++) {
@@ -243,6 +249,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * @param data Intent get from onActivityForResult
+     * @return Bitmap get from data
+     */
     private Bitmap getDataFromResult(Intent data) {
         if (data != null) {
             try {

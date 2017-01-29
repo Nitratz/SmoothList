@@ -61,6 +61,10 @@ public class DBManager extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    /**
+     * @param todo Item to insert in database
+     * @return false if failed or true if the item is inserted
+     */
     public boolean insertNote(ToDo todo) {
         SQLiteDatabase db = getWritableDatabase();
 
@@ -77,12 +81,20 @@ public class DBManager extends SQLiteOpenHelper {
         return id != -1;
     }
 
+    /**
+     * @param todo Item to delete in database
+     * @return false if failed or true if the item is deleted
+     */
     public boolean deleteNote(ToDo todo) {
         SQLiteDatabase db = getWritableDatabase();
 
         return db.delete(TABLE_TODO, C_ID + " = " + todo.getId(), null) > 0;
     }
 
+    /**
+     * @param todo Item to update in database
+     * @return false if failed or true if the item is deleted
+     */
     public boolean updateNote(ToDo todo) {
         ContentValues args = new ContentValues();
         SQLiteDatabase db = getReadableDatabase();
@@ -97,6 +109,10 @@ public class DBManager extends SQLiteOpenHelper {
         return db.update(TABLE_TODO, args, C_ID + " = " + todo.getId(), null) > 0;
     }
 
+    /**
+     * @param id Id of the item to update in database
+     * @return The ToDO object get from database else NULL
+     */
     public ToDo getNoteById(int id) {
         SQLiteDatabase db = getReadableDatabase();
         ToDo todo = new ToDo();

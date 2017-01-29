@@ -256,6 +256,9 @@ public class ViewEditActivity extends AppCompatActivity implements View.OnClickL
         startActivityForResult(galleryIntent , 21);
     }
 
+    /**
+     * @param image Bitmap image get from result
+     */
     private void resultGallery(Bitmap image) {
         image = Bitmap.createScaledBitmap(image, 600, 200, true);
         mPreview.setBackground(new BitmapDrawable(getResources(), image));
@@ -275,6 +278,10 @@ public class ViewEditActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    /**
+     * @param data Intent get from onActivityResult
+     * @return Bitmap get from data
+     */
     private Bitmap getDataFromResult(Intent data) {
         if (data != null) {
             try {

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">SmoothList</string>
-    <string name="desc_app">Une application simple avec un design sobre pour crée vos tâches en toutes simplicité !</string>
+    <string name="desc_app">Une application simple avec un design sobre pour crée vos tâches en toute simplicité !</string>
 
     <string name="dialog_tuto_title">Création de tâche</string>
     <string name="dialog_tuto">Vous pouvez crée des tâches rapidement et facilement !</string>
